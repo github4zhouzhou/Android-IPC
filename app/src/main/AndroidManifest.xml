@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.v.ipc">
+
+    <permission
+        android:name="com.v.ipc.permission.ACCESS_BOOK_SERVICE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.v.ipc.PROVIDER"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="com.v.ipc.PROVIDER" />
+    <uses-permission android:name="com.v.ipc.permission.ACCESS_BOOK_SERVICE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activities.ActivityMain">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activities.ActivitySecond"
+            android:label="Second Activity"
+            android:process=":remote" />
+        <activity android:name=".activities.ActivityThird"
+            android:label="Third Activity"
+            android:process="com.v.ipc.remote"/>
+        <activity
+            android:name=".provider.ProviderActivity"
+            android:label="ProviderActivity" />
+        <activity
+            android:name=".aidl.BookManagerActivity"
+            android:label="Book Manager Activity" />
+        <activity
+            android:name=".messenger.MessengerActivity"
+            android:label="MessengerActivity" />
+        <activity
+            android:name=".socket.TCPClientActivity"
+            android:label="TCP Client"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".binderPool.BinderPoolActivity"
+            android:label="Binder Pool" />
+
+
+        <service
+            android:name=".binderPool.BinderPoolService"
+            android:process=":binderPool" />
+        <service
+            android:name=".socket.TCPServerService"
+            android:process=":tcp" />
+        <service
+            android:name=".messenger.MessengerService"
+            android:process=":messenger" >
+            <intent-filter>
+                <action android:name="com.v.ipc.MessengerService.launch" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".aidl.BookManagerService"
+            android:process=":bookManager" />
+
+
+        <provider
+            android:name=".provider.BookProvider"
+            android:authorities="com.v.ipc.book.provider"
+            android:permission="com.v.ipc.PROVIDER"
+            android:process=":provider" >
+        </provider>
+
+    </application>
+
+</manifest>
